@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HelpdeskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="DistrictId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+    <Property Name="TimeOfLastDownload" Type="datetime" />
+    <Property Name="TimeOfLastUpload" Type="datetime" />
+    <Property Name="RegionId" Type="bigint" Nullable="false" />
+    <Property Name="EditUser" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="EditMachine" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="DateOfEdit" Type="datetime" Nullable="false" />
+    <Property Name="Version" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Location_id" />
+    </Key>
+    <Property Name="Location_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="location_name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Created_by" Type="nvarchar" MaxLength="250" />
+    <Property Name="Date_Created" Type="date" />
+    <Property Name="Location_Type_id" Type="int" />
+    <Property Name="District_id" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Location_Type">
+    <Key>
+      <PropertyRef Name="Location_Type_id" />
+    </Key>
+    <Property Name="Location_Type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Location_Type_Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Date_Created" Type="date" />
+    <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Queries">
+    <Key>
+      <PropertyRef Name="Query_id" />
+    </Key>
+    <Property Name="Query_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Query_Description" Type="nvarchar" MaxLength="255" />
+    <Property Name="Date_Created" Type="date" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="255" />
+    <Property Name="Location_id" Type="int" />
+    <Property Name="Priority" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+    <Property Name="Assign_To" Type="nvarchar" MaxLength="255" />
+    <Property Name="Assign_By" Type="nvarchar" MaxLength="255" />
+    <Property Name="Query_Type" Type="nvarchar" MaxLength="255" />
+    <Property Name="AssignedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Technicals">
+    <Key>
+      <PropertyRef Name="Technical_id" />
+    </Key>
+    <Property Name="Technical_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Query_id" Type="int" />
+    <Property Name="Problem_Finding" Type="nvarchar" MaxLength="255" />
+    <Property Name="Action_Taken" Type="nvarchar" MaxLength="255" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="255" />
+    <Property Name="Reason_for_Transfer" Type="nvarchar" MaxLength="255" />
+    <Property Name="Dated_Fixed" Type="date" />
+    <Property Name="Fixed_By" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Role_Id" />
+    </Key>
+    <Property Name="Role_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Date_Created" Type="date" />
+    <Property Name="Created_By" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="255" />
+    <Property Name="District_id" Type="bigint" />
+    <Property Name="Telephone" Type="int" />
+    <Property Name="Username" Type="nvarchar" MaxLength="255" />
+    <Property Name="Email" Type="nvarchar" MaxLength="255" />
+    <Property Name="Role_id" Type="int" />
+    <Property Name="Date_Created" Type="date" />
+    <Property Name="Password" Type="varbinary(max)" />
+    <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <Association Name="FK__Location__Locati__145C0A3F">
+    <End Role="Location_Type" Type="Self.Location_Type" Multiplicity="0..1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location_Type">
+        <PropertyRef Name="Location_Type_id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="Location_Type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Technical__Query__1920BF5C">
+    <End Role="Queries" Type="Self.Queries" Multiplicity="0..1" />
+    <End Role="Technicals" Type="Self.Technicals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Queries">
+        <PropertyRef Name="Query_id" />
+      </Principal>
+      <Dependent Role="Technicals">
+        <PropertyRef Name="Query_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HelpdeskModelStoreContainer">
+    <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location_Type" EntityType="Self.Location_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Queries" EntityType="Self.Queries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Location__Locati__145C0A3F" Association="Self.FK__Location__Locati__145C0A3F">
+      <End Role="Location_Type" EntitySet="Location_Type" />
+      <End Role="Location" EntitySet="Location" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Technical__Query__1920BF5C" Association="Self.FK__Technical__Query__1920BF5C">
+      <End Role="Queries" EntitySet="Queries" />
+      <End Role="Technicals" EntitySet="Technicals" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

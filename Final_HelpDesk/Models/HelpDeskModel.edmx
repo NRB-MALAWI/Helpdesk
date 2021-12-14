@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HelpdeskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TimeOfLastDownload" Type="datetime" />
+          <Property Name="TimeOfLastUpload" Type="datetime" />
+          <Property Name="RegionId" Type="bigint" Nullable="false" />
+          <Property Name="EditUser" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EditMachine" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateOfEdit" Type="datetime" Nullable="false" />
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Location_id" />
+          </Key>
+          <Property Name="Location_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="location_name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Created_by" Type="nvarchar" MaxLength="250" />
+          <Property Name="Date_Created" Type="date" />
+          <Property Name="Location_Type_id" Type="int" />
+          <Property Name="District_id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Location_Type">
+          <Key>
+            <PropertyRef Name="Location_Type_id" />
+          </Key>
+          <Property Name="Location_Type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location_Type_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Date_Created" Type="date" />
+          <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Queries">
+          <Key>
+            <PropertyRef Name="Query_id" />
+          </Key>
+          <Property Name="Query_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Query_Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Date_Created" Type="date" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="Location_id" Type="int" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+          <Property Name="Assign_To" Type="nvarchar" MaxLength="255" />
+          <Property Name="Assign_By" Type="nvarchar" MaxLength="255" />
+          <Property Name="Query_Type" Type="nvarchar" MaxLength="255" />
+          <Property Name="AssignedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Technicals">
+          <Key>
+            <PropertyRef Name="Technical_id" />
+          </Key>
+          <Property Name="Technical_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Query_id" Type="int" />
+          <Property Name="Problem_Finding" Type="nvarchar" MaxLength="255" />
+          <Property Name="Action_Taken" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="255" />
+          <Property Name="Reason_for_Transfer" Type="nvarchar" MaxLength="255" />
+          <Property Name="Dated_Fixed" Type="date" />
+          <Property Name="Fixed_By" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Date_Created" Type="date" />
+          <Property Name="Created_By" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="255" />
+          <Property Name="District_id" Type="bigint" />
+          <Property Name="Telephone" Type="int" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="Role_id" Type="int" />
+          <Property Name="Date_Created" Type="date" />
+          <Property Name="Password" Type="varbinary(max)" />
+          <Property Name="Created_by" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__Location__Locati__145C0A3F">
+          <End Role="Location_Type" Type="Self.Location_Type" Multiplicity="0..1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location_Type">
+              <PropertyRef Name="Location_Type_id" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="Location_Type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Technical__Query__1920BF5C">
+          <End Role="Queries" Type="Self.Queries" Multiplicity="0..1" />
+          <End Role="Technicals" Type="Self.Technicals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Queries">
+              <PropertyRef Name="Query_id" />
+            </Principal>
+            <Dependent Role="Technicals">
+              <PropertyRef Name="Query_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HelpdeskModelStoreContainer">
+          <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location_Type" EntityType="Self.Location_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Queries" EntityType="Self.Queries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Technicals" EntityType="Self.Technicals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Location__Locati__145C0A3F" Association="Self.FK__Location__Locati__145C0A3F">
+            <End Role="Location_Type" EntitySet="Location_Type" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Technical__Query__1920BF5C" Association="Self.FK__Technical__Query__1920BF5C">
+            <End Role="Queries" EntitySet="Queries" />
+            <End Role="Technicals" EntitySet="Technicals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HelpdeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="District">
+          <Key>
+            <PropertyRef Name="DistrictId" />
+          </Key>
+          <Property Name="DistrictId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TimeOfLastDownload" Type="DateTime" Precision="3" />
+          <Property Name="TimeOfLastUpload" Type="DateTime" Precision="3" />
+          <Property Name="RegionId" Type="Int64" Nullable="false" />
+          <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EditMachine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfEdit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Location_id" />
+          </Key>
+          <Property Name="Location_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="location_name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Created_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="0" />
+          <Property Name="Location_Type_id" Type="Int32" />
+          <Property Name="District_id" Type="Int64" />
+          <NavigationProperty Name="Location_Type" Relationship="Self.FK__Location__Locati__145C0A3F" FromRole="Location" ToRole="Location_Type" />
+        </EntityType>
+        <EntityType Name="Location_Type">
+          <Key>
+            <PropertyRef Name="Location_Type_id" />
+          </Key>
+          <Property Name="Location_Type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location_Type_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="0" />
+          <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK__Location__Locati__145C0A3F" FromRole="Location_Type" ToRole="Location" />
+        </EntityType>
+        <EntityType Name="Query">
+          <Key>
+            <PropertyRef Name="Query_id" />
+          </Key>
+          <Property Name="Query_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Query_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="0" />
+          <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Location_id" Type="Int32" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Assign_To" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Assign_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Query_Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Technicals" Relationship="Self.FK__Technical__Query__1920BF5C" FromRole="Queries" ToRole="Technicals" />
+        </EntityType>
+        <EntityType Name="Technical">
+          <Key>
+            <PropertyRef Name="Technical_id" />
+          </Key>
+          <Property Name="Technical_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Query_id" Type="Int32" />
+          <Property Name="Problem_Finding" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Action_Taken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Reason_for_Transfer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Dated_Fixed" Type="DateTime" Precision="0" />
+          <Property Name="Fixed_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Query" Relationship="Self.FK__Technical__Query__1920BF5C" FromRole="Technicals" ToRole="Queries" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Date_Created" Type="DateTime" Precision="0" />
+          <Property Name="Created_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="District_id" Type="Int64" />
+          <Property Name="Telephone" Type="Int32" />
+          <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Role_id" Type="Int32" />
+          <Property Name="Date_Created" Type="DateTime" Precision="0" />
+          <Property Name="Password" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__Location__Locati__145C0A3F">
+          <End Role="Location_Type" Type="Self.Location_Type" Multiplicity="0..1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location_Type">
+              <PropertyRef Name="Location_Type_id" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="Location_Type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Technical__Query__1920BF5C">
+          <End Role="Queries" Type="Self.Query" Multiplicity="0..1" />
+          <End Role="Technicals" Type="Self.Technical" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Queries">
+              <PropertyRef Name="Query_id" />
+            </Principal>
+            <Dependent Role="Technicals">
+              <PropertyRef Name="Query_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HelpdeskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Districts" EntityType="Self.District" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="Location_Type" EntityType="Self.Location_Type" />
+          <EntitySet Name="Queries" EntityType="Self.Query" />
+          <EntitySet Name="Technicals" EntityType="Self.Technical" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Location__Locati__145C0A3F" Association="Self.FK__Location__Locati__145C0A3F">
+            <End Role="Location_Type" EntitySet="Location_Type" />
+            <End Role="Location" EntitySet="Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Technical__Query__1920BF5C" Association="Self.FK__Technical__Query__1920BF5C">
+            <End Role="Queries" EntitySet="Queries" />
+            <End Role="Technicals" EntitySet="Technicals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HelpdeskModelStoreContainer" CdmEntityContainer="HelpdeskEntities">
+          <EntitySetMapping Name="Districts">
+            <EntityTypeMapping TypeName="HelpdeskModel.District">
+              <MappingFragment StoreEntitySet="District">
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="TimeOfLastDownload" ColumnName="TimeOfLastDownload" />
+                <ScalarProperty Name="TimeOfLastUpload" ColumnName="TimeOfLastUpload" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+                <ScalarProperty Name="EditMachine" ColumnName="EditMachine" />
+                <ScalarProperty Name="DateOfEdit" ColumnName="DateOfEdit" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="HelpdeskModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Location_id" ColumnName="Location_id" />
+                <ScalarProperty Name="location_name" ColumnName="location_name" />
+                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Location_Type_id" ColumnName="Location_Type_id" />
+                <ScalarProperty Name="District_id" ColumnName="District_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location_Type">
+            <EntityTypeMapping TypeName="HelpdeskModel.Location_Type">
+              <MappingFragment StoreEntitySet="Location_Type">
+                <ScalarProperty Name="Location_Type_id" ColumnName="Location_Type_id" />
+                <ScalarProperty Name="Location_Type_Name" ColumnName="Location_Type_Name" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queries">
+            <EntityTypeMapping TypeName="HelpdeskModel.Query">
+              <MappingFragment StoreEntitySet="Queries">
+                <ScalarProperty Name="Query_id" ColumnName="Query_id" />
+                <ScalarProperty Name="Query_Description" ColumnName="Query_Description" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Location_id" ColumnName="Location_id" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+                <ScalarProperty Name="Assign_To" ColumnName="Assign_To" />
+                <ScalarProperty Name="Assign_By" ColumnName="Assign_By" />
+                <ScalarProperty Name="Query_Type" ColumnName="Query_Type" />
+                <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Technicals">
+            <EntityTypeMapping TypeName="HelpdeskModel.Technical">
+              <MappingFragment StoreEntitySet="Technicals">
+                <ScalarProperty Name="Technical_id" ColumnName="Technical_id" />
+                <ScalarProperty Name="Query_id" ColumnName="Query_id" />
+                <ScalarProperty Name="Problem_Finding" ColumnName="Problem_Finding" />
+                <ScalarProperty Name="Action_Taken" ColumnName="Action_Taken" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Reason_for_Transfer" ColumnName="Reason_for_Transfer" />
+                <ScalarProperty Name="Dated_Fixed" ColumnName="Dated_Fixed" />
+                <ScalarProperty Name="Fixed_By" ColumnName="Fixed_By" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="HelpdeskModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HelpdeskModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="District_id" ColumnName="District_id" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

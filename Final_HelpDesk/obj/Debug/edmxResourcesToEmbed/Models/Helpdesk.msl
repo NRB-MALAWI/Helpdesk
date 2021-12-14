@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HelpdeskModelStoreContainer" CdmEntityContainer="HelpdeskEntities">
+    <EntitySetMapping Name="Districts">
+      <EntityTypeMapping TypeName="HelpdeskModel.District">
+        <MappingFragment StoreEntitySet="District">
+          <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="TimeOfLastDownload" ColumnName="TimeOfLastDownload" />
+          <ScalarProperty Name="TimeOfLastUpload" ColumnName="TimeOfLastUpload" />
+          <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+          <ScalarProperty Name="EditUser" ColumnName="EditUser" />
+          <ScalarProperty Name="EditMachine" ColumnName="EditMachine" />
+          <ScalarProperty Name="DateOfEdit" ColumnName="DateOfEdit" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="HelpdeskModel.Location">
+        <MappingFragment StoreEntitySet="Location">
+          <ScalarProperty Name="Location_id" ColumnName="Location_id" />
+          <ScalarProperty Name="location_name" ColumnName="location_name" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Location_Type_id" ColumnName="Location_Type_id" />
+          <ScalarProperty Name="District_id" ColumnName="District_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Location_Type">
+      <EntityTypeMapping TypeName="HelpdeskModel.Location_Type">
+        <MappingFragment StoreEntitySet="Location_Type">
+          <ScalarProperty Name="Location_Type_id" ColumnName="Location_Type_id" />
+          <ScalarProperty Name="Location_Type_Name" ColumnName="Location_Type_Name" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Queries">
+      <EntityTypeMapping TypeName="HelpdeskModel.Query">
+        <MappingFragment StoreEntitySet="Queries">
+          <ScalarProperty Name="Query_id" ColumnName="Query_id" />
+          <ScalarProperty Name="Query_Description" ColumnName="Query_Description" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Location_id" ColumnName="Location_id" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+          <ScalarProperty Name="Assign_To" ColumnName="Assign_To" />
+          <ScalarProperty Name="Assign_By" ColumnName="Assign_By" />
+          <ScalarProperty Name="Query_Type" ColumnName="Query_Type" />
+          <ScalarProperty Name="AssignedDate" ColumnName="AssignedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Technicals">
+      <EntityTypeMapping TypeName="HelpdeskModel.Technical">
+        <MappingFragment StoreEntitySet="Technicals">
+          <ScalarProperty Name="Technical_id" ColumnName="Technical_id" />
+          <ScalarProperty Name="Query_id" ColumnName="Query_id" />
+          <ScalarProperty Name="Problem_Finding" ColumnName="Problem_Finding" />
+          <ScalarProperty Name="Action_Taken" ColumnName="Action_Taken" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Reason_for_Transfer" ColumnName="Reason_for_Transfer" />
+          <ScalarProperty Name="Dated_Fixed" ColumnName="Dated_Fixed" />
+          <ScalarProperty Name="Fixed_By" ColumnName="Fixed_By" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="HelpdeskModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="HelpdeskModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="First_name" ColumnName="First_name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="District_id" ColumnName="District_id" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+          <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Created_by" ColumnName="Created_by" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

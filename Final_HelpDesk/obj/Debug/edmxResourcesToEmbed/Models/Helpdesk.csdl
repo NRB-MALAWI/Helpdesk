@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HelpdeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="DistrictId" />
+    </Key>
+    <Property Name="DistrictId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TimeOfLastDownload" Type="DateTime" Precision="3" />
+    <Property Name="TimeOfLastUpload" Type="DateTime" Precision="3" />
+    <Property Name="RegionId" Type="Int64" Nullable="false" />
+    <Property Name="EditUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EditMachine" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfEdit" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Version" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Location_id" />
+    </Key>
+    <Property Name="Location_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="location_name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Created_by" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="DateTime" Precision="0" />
+    <Property Name="Location_Type_id" Type="Int32" />
+    <Property Name="District_id" Type="Int64" />
+    <NavigationProperty Name="Location_Type" Relationship="Self.FK__Location__Locati__145C0A3F" FromRole="Location" ToRole="Location_Type" />
+  </EntityType>
+  <EntityType Name="Location_Type">
+    <Key>
+      <PropertyRef Name="Location_Type_id" />
+    </Key>
+    <Property Name="Location_Type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Location_Type_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="DateTime" Precision="0" />
+    <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Locations" Relationship="Self.FK__Location__Locati__145C0A3F" FromRole="Location_Type" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Query">
+    <Key>
+      <PropertyRef Name="Query_id" />
+    </Key>
+    <Property Name="Query_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Query_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="DateTime" Precision="0" />
+    <Property Name="Notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Location_id" Type="Int32" />
+    <Property Name="Priority" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Assign_To" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Assign_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Query_Type" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AssignedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Technicals" Relationship="Self.FK__Technical__Query__1920BF5C" FromRole="Queries" ToRole="Technicals" />
+  </EntityType>
+  <EntityType Name="Technical">
+    <Key>
+      <PropertyRef Name="Technical_id" />
+    </Key>
+    <Property Name="Technical_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Query_id" Type="Int32" />
+    <Property Name="Problem_Finding" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Action_Taken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Reason_for_Transfer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Dated_Fixed" Type="DateTime" Precision="0" />
+    <Property Name="Fixed_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Query" Relationship="Self.FK__Technical__Query__1920BF5C" FromRole="Technicals" ToRole="Queries" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="Role_Id" />
+    </Key>
+    <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Date_Created" Type="DateTime" Precision="0" />
+    <Property Name="Created_By" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="District_id" Type="Int64" />
+    <Property Name="Telephone" Type="Int32" />
+    <Property Name="Username" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Role_id" Type="Int32" />
+    <Property Name="Date_Created" Type="DateTime" Precision="0" />
+    <Property Name="Password" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Created_by" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK__Location__Locati__145C0A3F">
+    <End Role="Location_Type" Type="Self.Location_Type" Multiplicity="0..1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location_Type">
+        <PropertyRef Name="Location_Type_id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="Location_Type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Technical__Query__1920BF5C">
+    <End Role="Queries" Type="Self.Query" Multiplicity="0..1" />
+    <End Role="Technicals" Type="Self.Technical" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Queries">
+        <PropertyRef Name="Query_id" />
+      </Principal>
+      <Dependent Role="Technicals">
+        <PropertyRef Name="Query_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HelpdeskEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Districts" EntityType="Self.District" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="Location_Type" EntityType="Self.Location_Type" />
+    <EntitySet Name="Queries" EntityType="Self.Query" />
+    <EntitySet Name="Technicals" EntityType="Self.Technical" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__Location__Locati__145C0A3F" Association="Self.FK__Location__Locati__145C0A3F">
+      <End Role="Location_Type" EntitySet="Location_Type" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Technical__Query__1920BF5C" Association="Self.FK__Technical__Query__1920BF5C">
+      <End Role="Queries" EntitySet="Queries" />
+      <End Role="Technicals" EntitySet="Technicals" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
